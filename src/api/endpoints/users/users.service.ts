@@ -1,24 +1,21 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
-import { ActivityDocument } from "src/api/infrastructure/providers/dynamoDB/documents/activityDocument";
-import { ActivityRepository } from "src/api/infrastructure/repositories/activityRepository";
-import { CreateActivityDTO } from "./dtos/createActivityDTO";
-import { UpdateActivityDTO } from "./dtos/updateActivityDTO";
+import { UserDocument } from "src/api/infrastructure/providers/dynamoDB/documents/userDocument";
+import { UserRepository } from "src/api/infrastructure/repositories/userRepository";
+import { CreateUserDTO } from "./dtos/createUserDTO";
+import { UpdateUserDTO } from "./dtos/updateUserDTO";
 
 @Injectable()
-export class ActivitiesService {
-  constructor(private repository: ActivityRepository) {}
-
-  public async create(dto: CreateActivityDTO) {
-    const document = new ActivityDocument();
+export class UsersService {
+  constructor(private repository: UserRepository) {}
+  public async create(dto: CreateUserDTO) {
+    const document = new UserDocument();
 
     document.build(null, dto.name);
     return this.repository.create(document);
   }
-
   public async list() {
     return this.repository.findAll();
   }
-
   public async get(id: string) {
     let result;
     try {
@@ -28,9 +25,8 @@ export class ActivitiesService {
     }
     return result;
   }
-
-  public async update(dto: UpdateActivityDTO) {
-    const document = new ActivityDocument();
+  public async update(dto: UpdateUserDTO) {
+    const document = new UserDocument();
     document.build(dto.id, dto.name);
     let result;
     try {
@@ -40,7 +36,6 @@ export class ActivitiesService {
     }
     return result;
   }
-
   public async delete(id: string) {
     return this.repository.deleteById(id);
   }
