@@ -1,13 +1,17 @@
 import { Module } from "@nestjs/common";
-import { RouterModule, Routes } from "@nestjs/core";
-import { InfrastructureModule } from "src/infrastructure/infrastructure.module";
+import { RouterModule } from "@nestjs/core";
 import { ActivitiesModule } from "./activities/activities.module";
+import { UsersModule } from "./users/users.module";
 
 @Module({
   imports: [
-    InfrastructureModule,
     ActivitiesModule,
+    UsersModule,
     RouterModule.register([
+      {
+        path: "users",
+        module: UsersModule,
+      },
       {
         path: "activities",
         module: ActivitiesModule,
