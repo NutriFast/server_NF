@@ -8,3 +8,4 @@ import { DynamoDBAdapter } from './dynamoDbAdapter';
   exports: [DynamoDBAdapter],
 })
 export class DynamoDBAdapterModule {}
+
