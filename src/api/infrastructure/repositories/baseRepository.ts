@@ -1,8 +1,7 @@
-import { Logger } from '@nestjs/common';
-import { DataMapper } from '@aws/dynamodb-data-mapper';
-import { BaseDocument } from '../providers/dynamoDB/documents/baseDocument';
-import { DynamoDBAdapter } from '../providers/dynamoDB/dynamoDbAdapter';
-
+import { Logger } from "@nestjs/common";
+import { DataMapper } from "@aws/dynamodb-data-mapper";
+import { BaseDocument } from "../providers/dynamoDB/documents/baseDocument";
+import { DynamoDBAdapter } from "../providers/dynamoDB/dynamoDbAdapter";
 
 interface ZeroArgumentsConstructor<T> {
   new (): T;
@@ -21,7 +20,7 @@ export class BaseRepository<T extends BaseDocument> {
     tableName: string,
     repositoryClassName: string,
     documentClass: ZeroArgumentsConstructor<T>,
-    protected dynamoDBAdapter: DynamoDBAdapter,
+    protected dynamoDBAdapter: DynamoDBAdapter
   ) {
     this.tableName = tableName;
     this.documentClass = documentClass;
@@ -40,12 +39,12 @@ export class BaseRepository<T extends BaseDocument> {
         })
         .then(() => {
           this.logger.log(
-            `Table ${this.tableName} existed or has been created.`,
+            `Table ${this.tableName} existed or has been created.`
           );
         })
-        .catch(e => {
+        .catch((e) => {
           this.logger.error(
-            `Error checking the existence of ${this.tableName} table ${e.message}`,
+            `Error checking the existence of ${this.tableName} table ${e.message}`
           );
         });
     })();
@@ -57,15 +56,15 @@ export class BaseRepository<T extends BaseDocument> {
     } catch (err) {
       this.logger.error(
         `Error while fetching document from ${this.tableName} table.`,
-        err,
+        err
       );
-      if (err.name === 'ItemNotFoundException') {
+      if (err.name === "ItemNotFoundException") {
         throw new Error(
-          `Item not found in ${this.tableName} table with id -> ${document.id}`,
+          `Item not found in ${this.tableName} table with id -> ${document.id}`
         );
       }
       throw new Error(
-        `Error while fetching document from ${this.tableName} table.`,
+        `Error while fetching document from ${this.tableName} table.`
       );
     }
   }
@@ -78,10 +77,10 @@ export class BaseRepository<T extends BaseDocument> {
     } catch (err) {
       this.logger.error(
         `Error while creating document on ${this.tableName} table.`,
-        err,
+        err
       );
       throw new Error(
-        `Error while creating document on ${this.tableName} table.`,
+        `Error while creating document on ${this.tableName} table.`
       );
     }
   }
@@ -89,43 +88,43 @@ export class BaseRepository<T extends BaseDocument> {
   protected async updateDocument(document: T): Promise<T> {
     try {
       return await this.mapper.update<T>(document, {
-        onMissing: 'remove',
+        onMissing: "remove",
         condition: {
-          type: 'Equals',
-          subject: 'id',
+          type: "Equals",
+          subject: "id",
           object: document.id,
         },
       });
     } catch (err) {
-      if (err?.name === 'ConditionalCheckFailedException') {
+      if (err?.name === "ConditionalCheckFailedException") {
         this.logger.error(
           `AWS_SNS_INSTALLMENT_RETRY_TOPIC_ARN${this.tableName} table with id -> ${document.id}.`,
-          err,
+          err
         );
         throw new Error(
-          `AWS_SNS_INSTALLMENT_RETRY_TOPIC_ARN${this.tableName} table with id -> ${document.id}.`,
+          `AWS_SNS_INSTALLMENT_RETRY_TOPIC_ARN${this.tableName} table with id -> ${document.id}.`
         );
       }
       this.logger.error(
         `Error while updating document on ${this.tableName} table.`,
-        err,
+        err
       );
       throw new Error(
-        `Error while updating document on ${this.tableName} table.`,
+        `Error while updating document on ${this.tableName} table.`
       );
     }
   }
 
   protected async deleteDocument(document: T): Promise<T> {
     try {
-      return await this.mapper.delete<T>(document, { returnValues: 'ALL_OLD' });
+      return await this.mapper.delete<T>(document, { returnValues: "ALL_OLD" });
     } catch (err) {
       this.logger.error(
         `Error while deleting document from ${this.tableName} table.`,
-        err,
+        err
       );
       throw new Error(
-        `Error while deleting document from ${this.tableName} table.`,
+        `Error while deleting document from ${this.tableName} table.`
       );
     }
   }

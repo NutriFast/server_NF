@@ -6,6 +6,6 @@ import { ActivitiesService } from "./activities.service";
 
 @Module({
   providers: [ActivitiesService, ActivityRepository, DynamoDBAdapter],
-  controllers: [ActivitiesController]
+  controllers: [ActivitiesController],
 })
 export class ActivitiesModule {}

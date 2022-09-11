@@ -1,9 +1,9 @@
-import { Injectable, Logger } from '@nestjs/common';
-import * as AWS from 'aws-sdk';
-import * as DynamoDB from 'aws-sdk/clients/dynamodb';
-import { GlobalConfigInstance } from 'aws-sdk/lib/config';
-import { AWSRegion } from 'aws-sdk/clients/cur';
-import { DataMapper } from '@aws/dynamodb-data-mapper';
+import { Injectable, Logger } from "@nestjs/common";
+import * as AWS from "aws-sdk";
+import * as DynamoDB from "aws-sdk/clients/dynamodb";
+import { GlobalConfigInstance } from "aws-sdk/lib/config";
+import { AWSRegion } from "aws-sdk/clients/cur";
+import { DataMapper } from "@aws/dynamodb-data-mapper";
 
 export class DynamoDBAdapter {
   private logger = new Logger(DynamoDBAdapter.name);
@@ -29,12 +29,11 @@ export class DynamoDBAdapter {
         client: this.dynamoDb,
       });
     } catch (err) {
-      this.logger.error('Error in DynamoDB constructor', err);
+      this.logger.error("Error in DynamoDB constructor", err);
     }
   }
-  
+
   public getDataMapper(): DataMapper {
     return this.dataMapper;
   }
-
 }

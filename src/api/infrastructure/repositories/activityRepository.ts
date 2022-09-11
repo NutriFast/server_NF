@@ -1,26 +1,24 @@
-
-
-import { Injectable } from '@nestjs/common';
-import { ActivityDocument } from '../providers/dynamoDB/documents/activityDocument';
-import { DynamoDBAdapter } from '../providers/dynamoDB/dynamoDbAdapter';
-import { BaseRepository } from './baseRepository';
+import { Injectable } from "@nestjs/common";
+import { ActivityDocument } from "../providers/dynamoDB/documents/activityDocument";
+import { DynamoDBAdapter } from "../providers/dynamoDB/dynamoDbAdapter";
+import { BaseRepository } from "./baseRepository";
 
 @Injectable()
-export class ActivityRepository  extends BaseRepository<ActivityDocument> {
+export class ActivityRepository extends BaseRepository<ActivityDocument> {
   constructor(dynamoDBAdapter: DynamoDBAdapter) {
     super(
       ActivityDocument.tableName,
       ActivityDocument.name,
       ActivityDocument,
-      dynamoDBAdapter,
+      dynamoDBAdapter
     );
   }
 
   public async findAll(): Promise<ActivityDocument[]> {
     const withdrawals: ActivityDocument[] = [];
-  
+
     const iterator = await this.mapper.scan(ActivityDocument);
-    for await (const record of iterator)  withdrawals.push(record);
+    for await (const record of iterator) withdrawals.push(record);
     if (withdrawals.length === 0) return null;
     return withdrawals;
   }
@@ -33,14 +31,12 @@ export class ActivityRepository  extends BaseRepository<ActivityDocument> {
 
   public async create(
     document: ActivityDocument,
-    options?: any,
+    options?: any
   ): Promise<ActivityDocument> {
     return this.createDocument(document, options);
   }
 
-  public async update(
-    document: ActivityDocument,
-  ): Promise<ActivityDocument> {
+  public async update(document: ActivityDocument): Promise<ActivityDocument> {
     return this.updateDocument(document);
   }
 

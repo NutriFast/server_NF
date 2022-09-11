@@ -4,10 +4,8 @@ import { UserRepository } from "src/api/infrastructure/repositories/userReposito
 import { UsersController } from "./users.controller";
 import { UsersService } from "./users.service";
 
-
 @Module({
   providers: [UsersService, UserRepository, DynamoDBAdapter],
-  controllers: [UsersController]
+  controllers: [UsersController],
 })
 export class UsersModule {}
-

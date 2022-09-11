@@ -1,6 +1,6 @@
-import { Module } from '@nestjs/common';
+import { Module } from "@nestjs/common";
 
-import { DynamoDBAdapter } from './dynamoDbAdapter';
+import { DynamoDBAdapter } from "./dynamoDbAdapter";
 
 @Module({
   imports: [DynamoDBAdapter],
@@ -8,4 +8,3 @@ import { DynamoDBAdapter } from './dynamoDbAdapter';
   exports: [DynamoDBAdapter],
 })
 export class DynamoDBAdapterModule {}
-
