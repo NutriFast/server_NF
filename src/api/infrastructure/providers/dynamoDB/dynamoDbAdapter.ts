@@ -18,7 +18,7 @@ export class DynamoDBAdapter {
     try {
       const region: AWSRegion = process.env.AWS_DDB_REGION;
       this.awsConfig = new AWS.Config({
-        region: process.env.AWS_DDB_TZ,
+        region: region,
         credentials: {
           accessKeyId: process.env.AWS_DDB_KEYID,
           secretAccessKey: process.env.AWS_DDB_KEY,
@@ -29,7 +29,7 @@ export class DynamoDBAdapter {
         client: this.dynamoDb,
       });
     } catch (err) {
-      this.logger.error('Error in DynamoDBAdapter constructor', err);
+      this.logger.error('Error in DynamoDB constructor', err);
     }
   }
   
