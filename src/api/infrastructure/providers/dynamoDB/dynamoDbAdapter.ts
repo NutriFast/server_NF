@@ -16,9 +16,8 @@ export class DynamoDBAdapter {
 
   constructor() {
     try {
-      const region: AWSRegion = process.env.AWS_DDB_REGION;
       this.awsConfig = new AWS.Config({
-        region: region,
+        region: process.env.AWS_DDB_TZ,
         credentials: {
           accessKeyId: process.env.AWS_DDB_KEYID,
           secretAccessKey: process.env.AWS_DDB_KEY,
@@ -35,5 +34,8 @@ export class DynamoDBAdapter {
 
   public getDataMapper(): DataMapper {
     return this.dataMapper;
+  }
+  public getDynamoDb() {
+    return this.dynamoDb;
   }
 }
