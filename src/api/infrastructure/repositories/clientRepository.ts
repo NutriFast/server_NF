@@ -1,5 +1,4 @@
 import { Injectable } from "@nestjs/common";
-import AWS from "aws-sdk";
 import { ClientDocument } from "../documents/clientDocument";
 import { DynamoDBAdapter } from "../providers/dynamoDB/dynamoDbAdapter";
 import { BaseRepository } from "./baseRepository";
