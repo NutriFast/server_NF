@@ -7,6 +7,7 @@ import {
   Param,
   Patch,
   Post,
+  Query,
 } from "@nestjs/common";
 import { ClientsService } from "./clients.service";
 import { CreateClientDTO } from "./dtos/createClientDTO";
@@ -30,8 +31,9 @@ export class ClientsController {
     return result;
   }
   @Get()
-  async list() {
+  async list(@Query("name") name?: string) {
     this.logger.log("GET -> /clients");
+    if (name) return this.service.getByName(name);
     const result = this.service.list();
     return result;
   }

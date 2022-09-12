@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsString } from "class-validator";
+import { IsDate, IsNotEmpty, IsString } from "class-validator";
 
 export class UpdateClientDTO {
   @IsNotEmpty()
@@ -6,9 +6,16 @@ export class UpdateClientDTO {
 
   @IsNotEmpty()
   @IsString()
-  userId: string;
+  name: string;
 
   @IsNotEmpty()
   @IsString()
-  name: string;
+  userId: string;
+
+  @IsNotEmpty()
+  @IsDate()
+  birthDate: Date;
+
+  @IsNotEmpty()
+  gender: string;
 }

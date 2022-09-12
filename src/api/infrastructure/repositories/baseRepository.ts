@@ -2,10 +2,7 @@ import { Logger } from "@nestjs/common";
 import { DataMapper } from "@aws/dynamodb-data-mapper";
 import { BaseDocument } from "../documents/baseDocument";
 import { DynamoDBAdapter } from "../providers/dynamoDB/dynamoDbAdapter";
-
-interface ZeroArgumentsConstructor<T> {
-  new (): T;
-}
+import { ZeroArgumentsConstructor } from "../interfaces/zeroArgumentContructor.interface";
 
 export class BaseRepository<T extends BaseDocument> {
   private documentClass: ZeroArgumentsConstructor<T>;

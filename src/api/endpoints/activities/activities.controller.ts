@@ -7,6 +7,7 @@ import {
   Logger,
   Param,
   Body,
+  Query,
 } from "@nestjs/common";
 import { CreateActivityDTO } from "../activities/dtos/createActivityDTO";
 import { UpdateActivityDTO } from "../activities/dtos/updateActivityDTO";
@@ -24,8 +25,9 @@ export class ActivitiesController {
     return result;
   }
   @Get()
-  async list() {
+  async list(@Query("name") name?: string) {
     this.logger.log("GET -> /activities");
+    if (name) return this.service.getByName(name);
     const result = this.service.list();
     return result;
   }
