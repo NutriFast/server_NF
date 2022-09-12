@@ -27,13 +27,17 @@ export class ClientDocument extends BaseDocument implements Client {
   @attribute()
   name: string;
 
-  public build(
-    id: string = undefined,
-    userId: string,
-    name: string = undefined
-  ): void {
+  @attribute()
+  birthDate: Date;
+
+  @attribute()
+  gender: string;
+
+  public build(id, userId, name, birthDate, gender): void {
     this.id = id;
     this.userId = userId;
     this.name = name;
+    this.birthDate = birthDate;
+    this.gender = gender;
   }
 }

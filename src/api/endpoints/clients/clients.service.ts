@@ -15,7 +15,7 @@ export class ClientsService {
   public async create(dto: CreateClientDTO) {
     const document = new ClientDocument();
 
-    document.build(null, dto.userId, dto.name);
+    document.build(null, dto.userId, dto.name, dto.birthDate, dto.gender);
     return this.repository.create(document);
   }
 
@@ -35,7 +35,7 @@ export class ClientsService {
 
   public async update(dto: UpdateClientDTO) {
     const document = new ClientDocument();
-    document.build(dto.id, dto.name, dto.userId);
+    document.build(dto.id, dto.name, dto.userId, dto.birthDate, dto.gender);
     let result;
     try {
       result = await this.repository.update(document);
@@ -47,5 +47,9 @@ export class ClientsService {
 
   public async delete(id: string) {
     return this.repository.deleteById(id);
+  }
+
+  public async getByName(name: string) {
+    return this.repository.getByName(name);
   }
 }

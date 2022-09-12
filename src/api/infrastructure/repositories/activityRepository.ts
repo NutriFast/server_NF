@@ -45,4 +45,19 @@ export class ActivityRepository extends BaseRepository<ActivityDocument> {
     document.id = id;
     return this.deleteDocument(document);
   }
+
+  public async getByName(name: string): Promise<ActivityDocument[]> {
+    const document: ActivityDocument[] = [];
+
+    const iterator = await this.mapper.scan(ActivityDocument);
+    for await (const record of iterator) {
+      document.push(record);
+    }
+    if (document.length === 0) return null;
+    return document.filter((user) => {
+      return (
+        user.name.toLocaleLowerCase().indexOf(name.toLocaleLowerCase()) != -1
+      );
+    });
+  }
 }

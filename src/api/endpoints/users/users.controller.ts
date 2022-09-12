@@ -7,6 +7,7 @@ import {
   Logger,
   Param,
   Body,
+  Query,
 } from "@nestjs/common";
 import { CreateUserDTO } from "./dtos/createUserDTO";
 import { UpdateUserDTO } from "./dtos/updateUserDTO";
@@ -21,12 +22,19 @@ export class UsersController {
   async get(@Param("id") id: string) {
     this.logger.log(`GET -> /users/${id}`);
     const result = this.service.get(id);
-    return "result";
+    return result;
+  }
+  @Get("/:id/clients")
+  async getClients(@Param("id") id: string) {
+    this.logger.log(`GET -> /users/${id}/clients/`);
+    const result = this.service.getClients(id);
+    return result;
   }
   @Get()
-  async list() {
+  async list(@Query("name") name?: string) {
     this.logger.log("GET -> /users");
-    const result = await this.service.list();
+    if (name) return this.service.getByName(name);
+    const result = this.service.list();
     return result;
   }
   @Post()
