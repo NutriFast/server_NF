@@ -1,8 +1,7 @@
-import { Injectable, Logger } from "@nestjs/common";
+import { Logger } from "@nestjs/common";
 import * as AWS from "aws-sdk";
 import * as DynamoDB from "aws-sdk/clients/dynamodb";
 import { GlobalConfigInstance } from "aws-sdk/lib/config";
-import { AWSRegion } from "aws-sdk/clients/cur";
 import { DataMapper } from "@aws/dynamodb-data-mapper";
 
 export class DynamoDBAdapter {
