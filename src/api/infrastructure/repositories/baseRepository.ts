@@ -1,6 +1,6 @@
 import { Logger } from "@nestjs/common";
 import { DataMapper } from "@aws/dynamodb-data-mapper";
-import { BaseDocument } from "../providers/dynamoDB/documents/baseDocument";
+import { BaseDocument } from "../documents/baseDocument";
 import { DynamoDBAdapter } from "../providers/dynamoDB/dynamoDbAdapter";
 
 interface ZeroArgumentsConstructor<T> {
@@ -98,12 +98,10 @@ export class BaseRepository<T extends BaseDocument> {
     } catch (err) {
       if (err?.name === "ConditionalCheckFailedException") {
         this.logger.error(
-          `AWS_SNS_INSTALLMENT_RETRY_TOPIC_ARN${this.tableName} table with id -> ${document.id}.`,
+          `${this.tableName} table with id -> ${document.id}.`,
           err
         );
-        throw new Error(
-          `AWS_SNS_INSTALLMENT_RETRY_TOPIC_ARN${this.tableName} table with id -> ${document.id}.`
-        );
+        throw new Error(`${this.tableName} table with id -> ${document.id}.`);
       }
       this.logger.error(
         `Error while updating document on ${this.tableName} table.`,

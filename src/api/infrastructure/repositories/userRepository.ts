@@ -1,6 +1,5 @@
 import { Injectable } from "@nestjs/common";
-import { ActivityDocument } from "../providers/dynamoDB/documents/activityDocument";
-import { UserDocument } from "../providers/dynamoDB/documents/userDocument";
+import { UserDocument } from "../documents/userDocument";
 import { DynamoDBAdapter } from "../providers/dynamoDB/dynamoDbAdapter";
 import { BaseRepository } from "./baseRepository";
 
@@ -16,12 +15,12 @@ export class UserRepository extends BaseRepository<UserDocument> {
   }
 
   public async findAll(): Promise<UserDocument[]> {
-    const withdrawals: UserDocument[] = [];
+    const document: UserDocument[] = [];
 
     const iterator = await this.mapper.scan(UserDocument);
-    for await (const record of iterator) withdrawals.push(record);
-    if (withdrawals.length === 0) return null;
-    return withdrawals;
+    for await (const record of iterator) document.push(record);
+    if (document.length === 0) return null;
+    return document;
   }
 
   public async getById(id: string): Promise<UserDocument> {

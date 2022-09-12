@@ -1,5 +1,5 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
-import { ActivityDocument } from "src/api/infrastructure/providers/dynamoDB/documents/activityDocument";
+import { ActivityDocument } from "src/api/infrastructure/documents/activityDocument";
 import { ActivityRepository } from "src/api/infrastructure/repositories/activityRepository";
 import { CreateActivityDTO } from "./dtos/createActivityDTO";
 import { UpdateActivityDTO } from "./dtos/updateActivityDTO";

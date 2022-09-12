@@ -1,5 +1,5 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
-import { UserDocument } from "src/api/infrastructure/providers/dynamoDB/documents/userDocument";
+import { UserDocument } from "src/api/infrastructure/documents/userDocument";
 import { UserRepository } from "src/api/infrastructure/repositories/userRepository";
 import { CreateUserDTO } from "./dtos/createUserDTO";
 import { UpdateUserDTO } from "./dtos/updateUserDTO";

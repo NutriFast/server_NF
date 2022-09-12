@@ -1,9 +1,12 @@
-import { UUID } from "aws-sdk/clients/cloudtrail";
 import { IsNotEmpty, IsString } from "class-validator";
 
-export class UpdateUserDTO {
+export class UpdateClientDTO {
   @IsNotEmpty()
   id: string;
+
+  @IsNotEmpty()
+  @IsString()
+  userId: string;
 
   @IsNotEmpty()
   @IsString()
