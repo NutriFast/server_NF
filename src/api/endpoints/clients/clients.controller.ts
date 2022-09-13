@@ -35,7 +35,7 @@ export class ClientsController {
   }
   @UseGuards(JwtAuthGuard)
   @Get()
-  async list(@Request() req,@Query("name") name?: string) {
+  async list(@Request() req, @Query("name") name?: string) {
     this.logger.log("GET -> /clients");
     if (name) return this.service.getByName(name);
     const result = this.service.list();

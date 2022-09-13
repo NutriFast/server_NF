@@ -49,7 +49,7 @@ export class UsersService {
   public async delete(id: string) {
     return this.repository.deleteById(id);
   }
-  public async getByEmail(email:string){
+  public async getByEmail(email: string) {
     return this.repository.getByEmail(email);
   }
 }
