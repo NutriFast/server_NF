@@ -3,6 +3,6 @@ import { DynamoDBAdapterModule } from "./providers/dynamoDB/dynamoDbAdapter.modu
 
 @Module({
   imports: [DynamoDBAdapterModule],
-  exports: [DynamoDBAdapterModule],
+  exports: [DynamoDBAdapterModule]
 })
 export class InfrastructureModule {}

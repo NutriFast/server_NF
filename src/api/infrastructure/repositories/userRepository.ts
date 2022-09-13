@@ -60,4 +60,18 @@ export class UserRepository extends BaseRepository<UserDocument> {
       );
     });
   }
+  public async getByEmail(email: string): Promise<UserDocument[]> {
+    const document: UserDocument[] = [];
+
+    const iterator = await this.mapper.scan(UserDocument);
+    for await (const record of iterator) {
+      document.push(record);
+    }
+    if (document.length === 0) return null;
+    return document.filter((user) => {
+      return (
+        user.email.toLocaleLowerCase().indexOf(email.toLocaleLowerCase()) != -1
+      );
+    });
+  }
 }

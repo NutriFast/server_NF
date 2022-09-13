@@ -28,12 +28,12 @@ export class UserDocument extends BaseDocument implements User {
   email: string;
 
   @attribute()
-  password_hash: string;
+  password: string;
 
-  public build(id, name, email, password_hash): void {
+  public build(id, name, email, password): void {
     this.id = id;
     this.name = name;
     this.email = email;
-    this.password_hash = password_hash;
+    this.password = password;
   }
 }
