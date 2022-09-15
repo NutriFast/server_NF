@@ -14,5 +14,5 @@ export class UpdateUserDTO {
 
   @IsNotEmpty()
   @IsString()
-  password_hash: string;
+  password: string;
 }

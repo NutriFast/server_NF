@@ -11,5 +11,5 @@ export class CreateUserDTO {
 
   @IsNotEmpty()
   @IsString()
-  password_hash: string;
+  password: string;
 }

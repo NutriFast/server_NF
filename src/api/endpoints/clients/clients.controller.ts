@@ -8,7 +8,10 @@ import {
   Patch,
   Post,
   Query,
+  Request,
+  UseGuards,
 } from "@nestjs/common";
+import { JwtAuthGuard } from "src/api/infrastructure/middlewares/jwtAuth.guard";
 import { ClientsService } from "./clients.service";
 import { CreateClientDTO } from "./dtos/createClientDTO";
 import { UpdateClientDTO } from "./dtos/updateClientDTO";
@@ -30,8 +33,9 @@ export class ClientsController {
     const result = this.service.getClientByUserId(userId);
     return result;
   }
+  @UseGuards(JwtAuthGuard)
   @Get()
-  async list(@Query("name") name?: string) {
+  async list(@Request() req, @Query("name") name?: string) {
     this.logger.log("GET -> /clients");
     if (name) return this.service.getByName(name);
     const result = this.service.list();

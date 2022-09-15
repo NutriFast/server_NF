@@ -14,7 +14,7 @@ export class UsersService {
   public async create(dto: CreateUserDTO) {
     const document = new UserDocument();
 
-    document.build(null, dto.name, dto.email, dto.password_hash);
+    document.build(null, dto.name, dto.email, dto.password);
     return this.repository.create(document);
   }
   public async list() {
@@ -31,7 +31,7 @@ export class UsersService {
   }
   public async update(dto: UpdateUserDTO) {
     const document = new UserDocument();
-    document.build(dto.id, dto.name, dto.email, dto.password_hash);
+    document.build(dto.id, dto.name, dto.email, dto.password);
     let result;
     try {
       result = await this.repository.update(document);
@@ -48,5 +48,8 @@ export class UsersService {
   }
   public async delete(id: string) {
     return this.repository.deleteById(id);
+  }
+  public async getByEmail(email: string) {
+    return this.repository.getByEmail(email);
   }
 }
