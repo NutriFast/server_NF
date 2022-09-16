@@ -1,12 +1,12 @@
-import { Injectable, NotAcceptableException } from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
 import { UserRepository } from "src/api/infrastructure/repositories/userRepository";
-import { CreateUserDTO } from "../users/dtos/createUserDTO";
 import * as bcrypt from "bcrypt";
 import { UserDocument } from "src/api/infrastructure/documents/userDocument";
 import { UsersService } from "../users/users.service";
 import { JwtService } from "@nestjs/jwt";
 import { Role } from "src/api/infrastructure/constants/roles";
 import { SignInDTO } from "./dtos/signInDTO";
+import { ErroMessage } from "src/api/infrastructure/enums/erroMessages..enum";
 @Injectable()
 export class AuthService {
   constructor(
@@ -23,8 +23,8 @@ export class AuthService {
   }
   public async validateUser(username: string, password: string) {
     const user = await this.usersService.getByEmail(username);
-    if (!user) {
-      throw new NotAcceptableException("could not find the user");
+    if (!user[0]) {
+      throw new NotFoundException(`user-${ErroMessage.notFound}`);
     }
     const passwordValid = await bcrypt.compare(password, user[0].password);
     if (user && passwordValid) {
