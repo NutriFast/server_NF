@@ -9,7 +9,7 @@ import {
   Patch,
   Post,
   Query,
-  Request,
+  Req,
   UseGuards,
 } from "@nestjs/common";
 import { JwtAuthGuard } from "src/api/infrastructure/guards/jwtAuth.guard";
@@ -23,7 +23,7 @@ export class ClientsController {
   private logger = new Logger(ClientsController.name);
   @UseGuards(JwtAuthGuard)
   @Get("/:id")
-  async get(@Request() req, @Param("id") id: string) {
+  async get(@Req() req, @Param("id") id: string) {
     this.logger.log(`GET -> /clients/${id}`);
     const result = await this.service.getClientByUserId(req.user.userId);
     if (id) result.filter((client) => client.id == id);
@@ -32,7 +32,7 @@ export class ClientsController {
   }
   @UseGuards(JwtAuthGuard)
   @Get()
-  async list(@Request() req, @Query("name") name?: string) {
+  async list(@Req() req, @Query("name") name?: string) {
     this.logger.log("GET -> /clients");
     const result = await this.service.getClientByUserId(req.user.userId);
     if (name) result.filter((client) => client.name == name);
@@ -40,7 +40,7 @@ export class ClientsController {
   }
   @UseGuards(JwtAuthGuard)
   @Post()
-  async create(@Request() req, @Body() dto: CreateClientDTO) {
+  async create(@Req() req, @Body() dto: CreateClientDTO) {
     this.logger.log("POST -> /clients");
     const result = this.service.create(dto, req.user.userId);
     return result;

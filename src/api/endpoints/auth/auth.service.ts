@@ -5,6 +5,8 @@ import * as bcrypt from "bcrypt";
 import { UserDocument } from "src/api/infrastructure/documents/userDocument";
 import { UsersService } from "../users/users.service";
 import { JwtService } from "@nestjs/jwt";
+import { Role } from "src/api/infrastructure/constants/roles";
+import { SignInDTO } from "./dtos/signInDTO";
 @Injectable()
 export class AuthService {
   constructor(
@@ -12,11 +14,11 @@ export class AuthService {
     private usersService: UsersService,
     private jwtService: JwtService
   ) {}
-  public async signIn(dto: CreateUserDTO) {
+  public async signIn(dto: SignInDTO) {
     const hashedPassword = await bcrypt.hash(dto.password, 13);
     const document = new UserDocument();
 
-    document.build(null, dto.name, dto.email, hashedPassword);
+    document.build(null, dto.name, dto.email, hashedPassword, Role.normal);
     return this.repository.create(document);
   }
   public async validateUser(username: string, password: string) {
@@ -32,8 +34,7 @@ export class AuthService {
   }
   async login(user: any) {
     const payload = { username: user.email, sub: user.id };
-    return {
-      access_token: await this.jwtService.sign(payload),
-    };
+    const token = await this.jwtService.sign(payload).toString();
+    return {accessToken: `Bearer ${token}`}
   }
 }
