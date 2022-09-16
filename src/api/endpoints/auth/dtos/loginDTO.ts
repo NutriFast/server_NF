@@ -1,26 +1,16 @@
 import { Type } from "class-transformer";
-import { IsDefined, IsEmail, IsNotEmpty, IsString, Validate } from "class-validator";
+import { IsEmail, IsNotEmpty, IsString, Validate } from "class-validator";
 import { Roles } from "src/api/infrastructure/constants/roles";
 import { IsRole } from "src/api/infrastructure/decorators/isRole.decorators";
 
-export class UpdateUserDTO {
-  @IsNotEmpty()
-  id: string;
-
-  @IsNotEmpty()
-  @IsString()
-  name: string;
-
+export class LogInDTO {
   @IsNotEmpty()
   @IsString()
   @IsEmail()
-  email: string;
+  username: string;
 
   @IsNotEmpty()
   @IsString()
   password: string;
-  
-  @Validate(IsRole)
-  @IsNotEmpty()
-  role: Roles
+
 }

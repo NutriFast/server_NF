@@ -44,4 +44,8 @@ export class ActivitiesService {
   public async delete(id: string) {
     return this.repository.deleteById(id);
   }
+
+  public async getByName(name: string) {
+    return this.repository.getByName(name);
+  }
 }

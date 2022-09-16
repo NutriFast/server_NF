@@ -5,6 +5,7 @@ import {
   table,
 } from "@aws/dynamodb-data-mapper-annotations";
 import { User } from "src/api/infrastructure/interfaces/user.interface";
+import { Roles } from "../constants/roles";
 import { BaseDocument } from "./baseDocument";
 
 const TABLE_NAME = "hmg-users";
@@ -23,8 +24,21 @@ export class UserDocument extends BaseDocument implements User {
 
   @attribute()
   name: string;
-  public build(id: string = undefined, name: string = undefined): void {
+
+  @attribute()
+  email: string;
+
+  @attribute()
+  password: string;
+
+  @attribute()
+  role: Roles;
+
+  public build(id, name, email, password, role): void {
     this.id = id;
     this.name = name;
+    this.email = email;
+    this.password = password;
+    this.role = role;
   }
 }

@@ -2,10 +2,7 @@ import { Logger } from "@nestjs/common";
 import { DataMapper } from "@aws/dynamodb-data-mapper";
 import { BaseDocument } from "../documents/baseDocument";
 import { DynamoDBAdapter } from "../providers/dynamoDB/dynamoDbAdapter";
-
-interface ZeroArgumentsConstructor<T> {
-  new (): T;
-}
+import { ZeroArgumentsConstructor } from "../interfaces/zeroArgumentContructor.interface";
 
 export class BaseRepository<T extends BaseDocument> {
   private documentClass: ZeroArgumentsConstructor<T>;
@@ -26,62 +23,23 @@ export class BaseRepository<T extends BaseDocument> {
     this.documentClass = documentClass;
     this.logger = new Logger(repositoryClassName);
     this.mapper = this.dynamoDBAdapter.getDataMapper();
-    this.checkIfTableExists();
     this.logger.log(`${repositoryClassName} Initialized.`);
-  }
-
-  protected checkIfTableExists() {
-    (async () => {
-      await this.mapper
-        .ensureTableExists(this.documentClass, {
-          readCapacityUnits: 1,
-          writeCapacityUnits: 1,
-        })
-        .then(() => {
-          this.logger.log(
-            `Table ${this.tableName} existed or has been created.`
-          );
-        })
-        .catch((e) => {
-          this.logger.error(
-            `Error checking the existence of ${this.tableName} table ${e.message}`
-          );
-        });
-    })();
   }
 
   protected async getDocument(document: T): Promise<T> {
     try {
       return await this.mapper.get<T>(document);
     } catch (err) {
-      this.logger.error(
-        `Error while fetching document from ${this.tableName} table.`,
-        err
-      );
-      if (err.name === "ItemNotFoundException") {
-        throw new Error(
-          `Item not found in ${this.tableName} table with id -> ${document.id}`
-        );
-      }
-      throw new Error(
-        `Error while fetching document from ${this.tableName} table.`
-      );
+      this.logger.error(err);
     }
   }
 
   protected async createDocument(document: T, options?: any): Promise<T> {
     try {
       if (!options?.keep_id) delete document.id;
-
       return await this.mapper.put<T>(document);
     } catch (err) {
-      this.logger.error(
-        `Error while creating document on ${this.tableName} table.`,
-        err
-      );
-      throw new Error(
-        `Error while creating document on ${this.tableName} table.`
-      );
+      this.logger.error(err);
     }
   }
 
@@ -96,34 +54,15 @@ export class BaseRepository<T extends BaseDocument> {
         },
       });
     } catch (err) {
-      if (err?.name === "ConditionalCheckFailedException") {
-        this.logger.error(
-          `${this.tableName} table with id -> ${document.id}.`,
-          err
-        );
-        throw new Error(`${this.tableName} table with id -> ${document.id}.`);
-      }
-      this.logger.error(
-        `Error while updating document on ${this.tableName} table.`,
-        err
-      );
-      throw new Error(
-        `Error while updating document on ${this.tableName} table.`
-      );
+      this.logger.error(err);
     }
   }
 
   protected async deleteDocument(document: T): Promise<T> {
     try {
-      return await this.mapper.delete<T>(document, { returnValues: "ALL_OLD" });
+      return await this.mapper.delete<T>(document);
     } catch (err) {
-      this.logger.error(
-        `Error while deleting document from ${this.tableName} table.`,
-        err
-      );
-      throw new Error(
-        `Error while deleting document from ${this.tableName} table.`
-      );
+      this.logger.error(err);
     }
   }
 }
