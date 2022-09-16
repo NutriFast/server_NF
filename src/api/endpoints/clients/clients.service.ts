@@ -12,10 +12,10 @@ export class ClientsService {
     return this.repository.getClientByUserId(userId);
   }
 
-  public async create(dto: CreateClientDTO) {
+  public async create(dto: CreateClientDTO, userId: string) {
     const document = new ClientDocument();
 
-    document.build(null, dto.userId, dto.name, dto.birthDate, dto.gender);
+    document.build(null, userId, dto.name, dto.birthDate, dto.gender);
     return this.repository.create(document);
   }
 

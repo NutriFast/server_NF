@@ -6,10 +6,6 @@ export class CreateClientDTO {
   @IsString()
   name: string;
 
-  @IsNotEmpty()
-  @IsString()
-  userId: string;
-
   @IsDate()
   @Type(() => Date)
   birthDate: Date;
