@@ -4,6 +4,7 @@ import {
   Delete,
   Get,
   Logger,
+  NotFoundException,
   Param,
   Patch,
   Post,
@@ -11,7 +12,7 @@ import {
   Request,
   UseGuards,
 } from "@nestjs/common";
-import { JwtAuthGuard } from "src/api/infrastructure/middlewares/jwtAuth.guard";
+import { JwtAuthGuard } from "src/api/infrastructure/guards/jwtAuth.guard";
 import { ClientsService } from "./clients.service";
 import { CreateClientDTO } from "./dtos/createClientDTO";
 import { UpdateClientDTO } from "./dtos/updateClientDTO";
@@ -20,43 +21,44 @@ import { UpdateClientDTO } from "./dtos/updateClientDTO";
 export class ClientsController {
   constructor(private readonly service: ClientsService) {}
   private logger = new Logger(ClientsController.name);
-
+  @UseGuards(JwtAuthGuard)
   @Get("/:id")
-  async get(@Param("id") id: string) {
+  async get(@Request() req, @Param("id") id: string) {
     this.logger.log(`GET -> /clients/${id}`);
-    const result = this.service.get(id);
-    return result;
-  }
-  @Get("/users/:userId")
-  async getClientByUserId(@Param("userId") userId: string) {
-    this.logger.log("GET -> /clients");
-    const result = this.service.getClientByUserId(userId);
+    const result = await this.service.getClientByUserId(req.user.userId);
+    if (id) result.filter((client) => client.id == id);
+
     return result;
   }
   @UseGuards(JwtAuthGuard)
   @Get()
   async list(@Request() req, @Query("name") name?: string) {
     this.logger.log("GET -> /clients");
-    if (name) return this.service.getByName(name);
-    const result = this.service.list();
+    const result = await this.service.getClientByUserId(req.user.userId);
+    if (name) result.filter((client) => client.name == name);
     return result;
   }
+  @UseGuards(JwtAuthGuard)
   @Post()
-  async create(@Body() dto: CreateClientDTO) {
+  async create(@Request() req, @Body() dto: CreateClientDTO) {
     this.logger.log("POST -> /clients");
-    const result = this.service.create(dto);
+    const result = this.service.create(dto, req.user.userId);
     return result;
   }
+  @UseGuards(JwtAuthGuard)
   @Patch()
   async update(@Body() dto: UpdateClientDTO) {
     this.logger.log("PATCH -> /clients");
-    const result = this.service.update(dto);
-    return result;
+    const client = await this.service.get(dto.id);
+    if (client) return this.service.update(dto);
+    throw new NotFoundException("Client not found");
   }
+  @UseGuards(JwtAuthGuard)
   @Delete()
   async delete(@Body("id") id: string) {
     this.logger.log("DELETE -> /clients");
-    const result = this.service.delete(id);
-    return result;
+    const client = await this.service.get(id);
+    if (client) return this.service.delete(id);
+    throw new NotFoundException("Client not found");
   }
 }

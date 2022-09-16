@@ -1,30 +1,32 @@
 import {
-  Body,
   Controller,
-  Request,
-  Logger,
   Post,
   UseGuards,
+  Request,
+  Get,
+  Logger,
+  Body,
 } from "@nestjs/common";
-import { AuthGuard } from "@nestjs/passport";
-import { LocalAuthGuard } from "src/api/infrastructure/middlewares/localAuth.guard";
+import { JwtAuthGuard } from "src/api/infrastructure/guards/jwtAuth.guard";
+import { LocalAuthGuard } from "src/api/infrastructure/guards/localAuth.guard";
 import { CreateUserDTO } from "../users/dtos/createUserDTO";
+import { UsersService } from "../users/users.service";
 import { AuthService } from "./auth.service";
 
 @Controller()
 export class AuthController {
-  constructor(private readonly service: AuthService) {}
+  constructor(private authService: AuthService) {}
   private logger = new Logger(AuthController.name);
-
-  @Post("/signin")
-  async signIn(@Body() dto: CreateUserDTO) {
-    this.logger.log(`POST -> /auth/signin`);
-    return this.service.signIn(dto);
-  }
   @UseGuards(LocalAuthGuard)
-  @Post("/login")
+  @Post("login")
   async login(@Request() req) {
-    this.logger.log(`POST -> /auth/login`);
-    return this.service.login(req.user);
+    this.logger.log(`GET -> /login`);
+    return this.authService.login(req.user);
+  }
+
+  @Post("signIn")
+  async signIn(@Body() dto: CreateUserDTO) {
+    this.logger.log(`POST -> /signin`);
+    return this.authService.signIn(dto);
   }
 }
