@@ -26,7 +26,7 @@ export class UsersController {
   @Get("/:id")
   async get(@Req() req,@Param("id") id: string) {
     this.logger.log(`GET -> /users/${id}`);
-    await this.rolesMiddleware.isMaster(req)
+    await this.rolesMiddleware.isMaster(await this.service.get(req.user.userId));
     const result = this.service.get(id);
     return result;
   }
@@ -34,7 +34,7 @@ export class UsersController {
   @Get("/:id/clients")
   async getClients(@Req() req,@Param("id") id: string) {
     this.logger.log(`GET -> /users/${id}/clients/`);
-    await this.rolesMiddleware.isMaster(req)
+    await this.rolesMiddleware.isMaster(await this.service.get(req.user.userId));
     const result = this.service.getClients(id);
     return result;
   }
@@ -42,8 +42,7 @@ export class UsersController {
   @Get()
   async list(@Req() req,@Query("name") name?: string) {
     this.logger.log("GET -> /users");
-    await this.rolesMiddleware.isMaster(req)
-    console.log(name)
+    await this.rolesMiddleware.isMaster(await this.service.get(req.user.userId))
     if (name) return this.service.getByName(name);
     const result = this.service.list();
     return result;
@@ -52,7 +51,7 @@ export class UsersController {
   @Post()
   async create(@Req() req,@Body() dto: CreateUserDTO) {
     this.logger.log("POST -> /users");
-    await this.rolesMiddleware.isMaster(req)
+    await this.rolesMiddleware.isMaster(await this.service.get(req.user.userId));
     const result = this.service.create(dto);
     return result;
   }
@@ -60,7 +59,7 @@ export class UsersController {
   @Patch()
   async update(@Req() req,@Body() dto: UpdateUserDTO) {
     this.logger.log("PATCH -> /users");
-    await this.rolesMiddleware.isMaster(req)
+    await this.rolesMiddleware.isMaster(await this.service.get(req.user.userId));
     const result = this.service.update(dto);
     return result;
   }
@@ -68,7 +67,7 @@ export class UsersController {
   @Delete()
   async delete(@Req() req,@Body("id") id: string) {
     this.logger.log("DELETE -> /users");
-    await this.rolesMiddleware.isMaster(req)
+    await this.rolesMiddleware.isMaster(await this.service.get(req.user.userId));
     const result = this.service.delete(id);
     return result;
   }
