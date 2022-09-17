@@ -10,7 +10,16 @@ import { ActivitiesController } from "./activities.controller";
 import { ActivitiesService } from "./activities.service";
 
 @Module({
-  providers: [ActivitiesService, ActivityRepository, DynamoDBAdapter, JwtStrategy, RolesMiddleware, UsersService, UserRepository, ClientRepository],
+  providers: [
+    ActivitiesService,
+    ActivityRepository,
+    DynamoDBAdapter,
+    JwtStrategy,
+    RolesMiddleware,
+    UsersService,
+    UserRepository,
+    ClientRepository,
+  ],
   controllers: [ActivitiesController],
 })
 export class ActivitiesModule {}
