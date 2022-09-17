@@ -1,4 +1,3 @@
 export enum ErroMessage {
-    notFound = 'not-found-exception',
-  }
-  
+  notFound = "not-found-exception",
+}

@@ -18,14 +18,14 @@ import { JwtAuthGuard } from "src/api/infrastructure/guards/jwtAuth.guard";
 import { ClientsService } from "./clients.service";
 import { CreateClientDTO } from "./dtos/createClientDTO";
 import { UpdateClientDTO } from "./dtos/updateClientDTO";
-@ApiTags('Clients')
+@ApiTags("Clients")
 @Controller()
 export class ClientsController {
   constructor(private readonly service: ClientsService) {}
   private logger = new Logger(ClientsController.name);
 
-  @ApiHeader({ name: 'Authorization', required: true })
-  @ApiOperation({ description: 'This endpoint returns a client by its id' })
+  @ApiHeader({ name: "Authorization", required: true })
+  @ApiOperation({ description: "This endpoint returns a client by its id" })
   @UseGuards(JwtAuthGuard)
   @Get("/:id")
   async get(@Req() req, @Param("id") id: string) {
@@ -35,8 +35,9 @@ export class ClientsController {
 
     return result;
   }
-  @ApiHeader({ name: 'Authorization', required: true })
-  @ApiOperation({ description: 'This endpoint returns all client' })
+
+  @ApiHeader({ name: "Authorization", required: true })
+  @ApiOperation({ description: "This endpoint returns all client" })
   @UseGuards(JwtAuthGuard)
   @Get()
   async list(@Req() req, @Query("name") name?: string | undefined) {
@@ -46,8 +47,8 @@ export class ClientsController {
     return result;
   }
 
-  @ApiHeader({ name: 'Authorization', required: true })
-  @ApiOperation({ description: 'This endpoint create a client' })
+  @ApiHeader({ name: "Authorization", required: true })
+  @ApiOperation({ description: "This endpoint create a client" })
   @UseGuards(JwtAuthGuard)
   @Post()
   async create(@Req() req, @Body() dto: CreateClientDTO) {
@@ -55,8 +56,9 @@ export class ClientsController {
     const result = this.service.create(dto, req.user.userId);
     return result;
   }
-  @ApiHeader({ name: 'Authorization', required: true })
-  @ApiOperation({ description: 'This endpoint edit a client by its id' })
+
+  @ApiHeader({ name: "Authorization", required: true })
+  @ApiOperation({ description: "This endpoint edit a client by its id" })
   @UseGuards(JwtAuthGuard)
   @Patch()
   async update(@Body() dto: UpdateClientDTO) {
@@ -65,8 +67,9 @@ export class ClientsController {
     if (client) return this.service.update(dto);
     throw new NotFoundException("Client not found");
   }
-  @ApiHeader({ name: 'Authorization', required: true })
-  @ApiOperation({ description: 'This endpoint delete a client by its id' })
+
+  @ApiHeader({ name: "Authorization", required: true })
+  @ApiOperation({ description: "This endpoint delete a client by its id" })
   @UseGuards(JwtAuthGuard)
   @Delete()
   async delete(@Body("id") id: string) {
