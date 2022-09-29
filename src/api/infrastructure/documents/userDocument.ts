@@ -34,11 +34,10 @@ export class UserDocument extends BaseDocument implements User {
   @attribute()
   role: Roles;
 
-  public build(id, name, email, password, role): void {
+  public build(id, name, email, role): void {
     this.id = id;
     this.name = name;
     this.email = email;
-    this.password = password;
     this.role = role;
   }
 }
