@@ -35,4 +35,8 @@ export class AuthController {
     if (req.user) return this.authService.login(req.user);
     else return new ForbiddenException("Failed to login with google");
   }
+  @Get("healty")
+  getHealty() {
+    return "Healty"
+  }
 }
