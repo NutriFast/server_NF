@@ -13,7 +13,6 @@ export class AuthService {
     private repository: UserRepository,
     private usersService: UsersService,
     private jwtService: JwtService,
-    private logger = new Logger(AuthService.name)
   ) {}
   public async signIn(dto: SignInDTO) {
     const hashedPassword = await bcrypt.hash(dto.password, 13);
@@ -41,7 +40,7 @@ export class AuthService {
       const document = new UserDocument();
       document.build(null, fullName, user.email, Role.normal);
       const newUser = await this.usersService.create(document);
-      this.logger.log(`new user created on dynamodb -> ${newUser}`)
+      console.log(`new user created on dynamodb -> ${newUser}`)
     }
     const token = await this.jwtService.sign(payload).toString();
     return { accessToken: `Bearer ${token}` };
