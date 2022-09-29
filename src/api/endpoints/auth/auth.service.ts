@@ -18,7 +18,7 @@ export class AuthService {
     const hashedPassword = await bcrypt.hash(dto.password, 13);
     const document = new UserDocument();
 
-    document.build(null, dto.name, dto.email, hashedPassword, Role.normal);
+    document.build(null, dto.name, dto.email, Role.normal);
     return this.repository.create(document);
   }
   public async validateUser(username: string, password: string) {
@@ -34,6 +34,13 @@ export class AuthService {
   }
   async login(user: any) {
     const payload = { username: user.email, sub: user.id };
+    const userFound = await this.usersService.getByEmail(user.email);
+    if (!userFound.length) {
+      const fullName = user.firstName + " " + user.lastName;
+      const document = new UserDocument();
+      document.build(null, fullName, user.email, Role.normal);
+      const newUser = await this.usersService.create(document);
+    }
     const token = await this.jwtService.sign(payload).toString();
     return { accessToken: `Bearer ${token}` };
   }

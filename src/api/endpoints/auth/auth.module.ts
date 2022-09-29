@@ -3,6 +3,7 @@ import { JwtModule } from "@nestjs/jwt";
 import { PassportModule } from "@nestjs/passport";
 import { jwtConstants } from "src/api/infrastructure/constants/jwtSecret";
 import { DynamoDBAdapter } from "src/api/infrastructure/providers/dynamoDB/dynamoDbAdapter";
+import { GoogleStrategy } from "src/api/infrastructure/providers/passport/google.stategy";
 import { JwtStrategy } from "src/api/infrastructure/providers/passport/jwt.auth";
 import { LocalStrategy } from "src/api/infrastructure/providers/passport/local.auth";
 import { UsersModule } from "../users/users.module";
@@ -18,7 +19,13 @@ import { AuthService } from "./auth.service";
       signOptions: { expiresIn: jwtConstants.expireIn },
     }),
   ],
-  providers: [DynamoDBAdapter, AuthService, LocalStrategy, JwtStrategy],
+  providers: [
+    DynamoDBAdapter,
+    AuthService,
+    LocalStrategy,
+    JwtStrategy,
+    GoogleStrategy,
+  ],
   controllers: [AuthController],
   exports: [AuthService],
 })
