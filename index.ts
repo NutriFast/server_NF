@@ -16,3 +16,8 @@ export const api = functions.https.onRequest(async (request, response) => {
   await createFunction(expressServer);
   expressServer(request, response);
 });
+
+// exports.app = functions.https.onRequest(async (request, response) => {
+//   await createFunction(expressServer);
+//   expressServer(request, response);
+// });
