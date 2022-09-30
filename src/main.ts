@@ -6,9 +6,7 @@ import { SwaggerModule, DocumentBuilder } from "@nestjs/swagger";
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.useGlobalPipes(new ValidationPipe());
-  app.enableCors({
-
-  })
+  app.enableCors({});
   const config = new DocumentBuilder()
     .setTitle("NutriFast API")
     .setDescription("This is a nutricion API made for a TCC")
@@ -18,9 +16,8 @@ async function bootstrap() {
   SwaggerModule.setup("api", app, document);
   await app.enableCors({
     origin: true,
-    allowedHeaders:
-      'Content-Type, Content-Host, Authorization',
-    methods: 'GET,PUT,POST,DELETE,UPDATE,OPTIONS',
+    allowedHeaders: "Content-Type, Content-Host, Authorization",
+    methods: "GET,PUT,POST,DELETE,UPDATE,OPTIONS",
     credentials: true,
   });
 

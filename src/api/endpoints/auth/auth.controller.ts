@@ -37,6 +37,6 @@ export class AuthController {
   }
   @Get("healty")
   getHealty() {
-    return "Healty"
+    return "Healty";
   }
 }

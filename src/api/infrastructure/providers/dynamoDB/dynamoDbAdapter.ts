@@ -18,8 +18,8 @@ export class DynamoDBAdapter {
       this.awsConfig = new AWS.Config({
         region: process.env.AWS_DDB_TZ,
         credentials: {
-          accessKeyId: process.env.AWS_DDB_KEYID,
-          secretAccessKey: process.env.AWS_DDB_KEY,
+          accessKeyId: process.env.AWS_DDB_ID,
+          secretAccessKey: process.env.AWS_DDB_SECRET,
         },
       });
       this.dynamoDb = new DynamoDB(this.awsConfig);
