@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from "@nestjs/common";
+import { Injectable, Logger, NotFoundException } from "@nestjs/common";
 import { UserRepository } from "src/api/infrastructure/repositories/userRepository";
 import * as bcrypt from "bcrypt";
 import { UserDocument } from "src/api/infrastructure/documents/userDocument";
@@ -18,7 +18,7 @@ export class AuthService {
     const hashedPassword = await bcrypt.hash(dto.password, 13);
     const document = new UserDocument();
 
-    document.build(null, dto.name, dto.email, hashedPassword, Role.normal);
+    document.build(null, dto.name, dto.email, Role.normal);
     return this.repository.create(document);
   }
   public async validateUser(username: string, password: string) {
@@ -33,8 +33,16 @@ export class AuthService {
     return null;
   }
   async login(user: any) {
-    const payload = { username: user.email, sub: user.id };
+    const userFound = await this.usersService.getByEmail(user.email);
+    const payload = { username: user.email, sub: userFound[0].id };
+    if (!userFound || !userFound.length) {
+      const fullName = user.firstName + " " + user.lastName;
+      const document = new UserDocument();
+      document.build(null, fullName, user.email, Role.normal);
+      const newUser = await this.usersService.create(document);
+      console.log(`new user created on dynamodb -> ${newUser}`);
+    }
     const token = await this.jwtService.sign(payload).toString();
-    return {accessToken: `Bearer ${token}`}
+    return { accessToken: `Bearer ${token}` };
   }
 }

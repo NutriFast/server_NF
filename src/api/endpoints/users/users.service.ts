@@ -14,7 +14,7 @@ export class UsersService {
   public async create(dto: CreateUserDTO) {
     const document = new UserDocument();
 
-    document.build(null, dto.name, dto.email, dto.password, dto.role);
+    document.build(null, dto.name, dto.email, dto.role);
     return this.repository.create(document);
   }
   public async list() {
@@ -31,7 +31,7 @@ export class UsersService {
   }
   public async update(dto: UpdateUserDTO) {
     const document = new UserDocument();
-    document.build(dto.id, dto.name, dto.email, dto.password, dto.role);
+    document.build(dto.id, dto.name, dto.email, dto.role);
     let result;
     try {
       result = await this.repository.update(document);
