@@ -21,6 +21,6 @@ async function bootstrap() {
     credentials: true,
   });
 
-  await app.listen(3000);
+  await app.listen(process.env.ENVIRONMENT == 'DEV' ? process.env.PORT_DEV : process.env.PORT_PROD);
 }
 bootstrap();
