@@ -9,15 +9,15 @@ async function bootstrap() {
   app.enableCors({});
   const config = new DocumentBuilder()
     .setTitle("NutriFast API")
-    .setDescription("This is a nutricion API made for a TCC")
+    .setDescription("NutriFast API SWAGGER")
     .setVersion("1.0")
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup("api", app, document);
   await app.enableCors({
     origin: true,
-    allowedHeaders: "Content-Type, Content-Host, Authorization",
-    methods: "GET,PUT,POST,DELETE,UPDATE,OPTIONS",
+    allowedHeaders: "Authorization",
+    methods: "GET,PATCH,POST,DELETE",
     credentials: true,
   });
 
