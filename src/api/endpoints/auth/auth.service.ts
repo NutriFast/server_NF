@@ -33,8 +33,8 @@ export class AuthService {
     return null;
   }
   async login(user: any) {
-    const payload = { username: user.email, sub: user.id };
     const userFound = await this.usersService.getByEmail(user.email);
+    const payload = { username: user.email, sub: userFound[0].id };
     if (!userFound || !userFound.length) {
       const fullName = user.firstName + " " + user.lastName;
       const document = new UserDocument();
