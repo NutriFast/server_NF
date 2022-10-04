@@ -34,14 +34,16 @@ export class AuthService {
   }
   async login(user: any) {
     const userFound = await this.usersService.getByEmail(user.email);
-    const payload = { username: user.email, sub: userFound[0].id };
+    let payload
     if (!userFound || !userFound.length) {
       const fullName = user.firstName + " " + user.lastName;
       const document = new UserDocument();
       document.build(null, fullName, user.email, Role.normal);
       const newUser = await this.usersService.create(document);
+      payload = { username: user.email, sub: newUser.id }
       console.log(`new user created on dynamodb -> ${newUser}`);
     }
+    payload = { username: user.email, sub: userFound[0].id }
     const token = await this.jwtService.sign(payload).toString();
     return { accessToken: `Bearer ${token}` };
   }

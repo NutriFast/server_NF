@@ -6,7 +6,12 @@ import { SwaggerModule, DocumentBuilder } from "@nestjs/swagger";
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.useGlobalPipes(new ValidationPipe());
-  app.enableCors({});
+  app.enableCors({
+    origin: true,
+    methods: "GET,PATCH,POST,DELETE",
+    allowedHeaders: "Authorization",
+    credentials: true,
+  });
   const config = new DocumentBuilder()
     .setTitle("NutriFast API")
     .setDescription("NutriFast API SWAGGER")
@@ -14,13 +19,6 @@ async function bootstrap() {
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup("api", app, document);
-  await app.enableCors({
-    origin: true,
-    allowedHeaders: "Authorization",
-    methods: "GET,PATCH,POST,DELETE",
-    credentials: true,
-  });
-
   await app.listen(process.env.ENVIRONMENT == 'DEV' ? process.env.PORT_DEV : process.env.PORT_PROD);
 }
 bootstrap();
