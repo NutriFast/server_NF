@@ -23,9 +23,6 @@ export class UserDocument extends BaseDocument implements User {
   id: string;
 
   @attribute()
-  name: string;
-
-  @attribute()
   email: string;
 
   @attribute()
@@ -34,9 +31,8 @@ export class UserDocument extends BaseDocument implements User {
   @attribute()
   role: Roles;
 
-  public build(id, name, email, role): void {
+  public build(id, email, role): void {
     this.id = id;
-    this.name = name;
     this.email = email;
     this.role = role;
   }

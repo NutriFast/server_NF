@@ -61,7 +61,6 @@ export class UsersController {
     await this.rolesMiddleware.isMaster(
       await this.service.get(req.user.userId)
     );
-    if (name) return this.service.getByName(name);
     const result = this.service.list();
     return result;
   }

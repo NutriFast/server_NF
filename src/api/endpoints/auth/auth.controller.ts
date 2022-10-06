@@ -15,10 +15,12 @@ import { GoogleStrategy } from "src/api/infrastructure/providers/passport/google
 import { AuthService } from "./auth.service";
 import { LogInDTO } from "./dtos/loginDTO";
 import { SignInDTO } from "./dtos/signInDTO";
+import { GoogleAuthenticationService } from "./googleAuthentication.service";
+import * as googleapis from 'googleapis'
 @ApiTags("Auth")
 @Controller()
 export class AuthController {
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private googleAuthenticationService:GoogleAuthenticationService) {}
   private logger = new Logger(AuthController.name);
 
   @ApiOperation({
@@ -38,5 +40,14 @@ export class AuthController {
   @Get("healty")
   getHealty() {
     return "Healty";
+  }
+  @Post('/google')
+  async authenticate(@Body() tokenData: any, @Req() request) {
+    this.logger.log('POST -> auth/google')
+    console.log('auth/google')
+    const data = await this.googleAuthenticationService.authenticate(tokenData.token);
+    if (data) return this.authService.login(data);
+ 
+    return data.toString();
   }
 }
