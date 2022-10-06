@@ -9,6 +9,7 @@ import { LocalStrategy } from "src/api/infrastructure/providers/passport/local.a
 import { UsersModule } from "../users/users.module";
 import { AuthController } from "./auth.controller";
 import { AuthService } from "./auth.service";
+import { GoogleAuthenticationService } from "./googleAuthentication.service";
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { AuthService } from "./auth.service";
     LocalStrategy,
     JwtStrategy,
     GoogleStrategy,
+    GoogleAuthenticationService
   ],
   controllers: [AuthController],
   exports: [AuthService],

@@ -14,7 +14,7 @@ export class UsersService {
   public async create(dto: CreateUserDTO) {
     const document = new UserDocument();
 
-    document.build(null, dto.name, dto.email, dto.role);
+    document.build(null, dto.email, dto.role);
     return this.repository.create(document);
   }
   public async list() {
@@ -31,7 +31,7 @@ export class UsersService {
   }
   public async update(dto: UpdateUserDTO) {
     const document = new UserDocument();
-    document.build(dto.id, dto.name, dto.email, dto.role);
+    document.build(dto.id, dto.email, dto.role);
     let result;
     try {
       result = await this.repository.update(document);
@@ -39,9 +39,6 @@ export class UsersService {
       throw new NotFoundException(err);
     }
     return result;
-  }
-  public async getByName(name: string) {
-    return this.repository.getByName(name);
   }
   public async getClients(id: string) {
     return this.clientRepository.getClientByUserId(id);

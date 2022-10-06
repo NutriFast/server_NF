@@ -18,7 +18,7 @@ export class AuthService {
     const hashedPassword = await bcrypt.hash(dto.password, 13);
     const document = new UserDocument();
 
-    document.build(null, dto.name, dto.email, Role.normal);
+    document.build(null, dto.email, Role.normal);
     return this.repository.create(document);
   }
   public async validateUser(username: string, password: string) {
@@ -33,12 +33,12 @@ export class AuthService {
     return null;
   }
   async login(user: any) {
+    console.log(user.email)
     const userFound = await this.usersService.getByEmail(user.email);
     let payload
     if (!userFound || !userFound.length) {
-      const fullName = user.firstName + " " + user.lastName;
       const document = new UserDocument();
-      document.build(null, fullName, user.email, Role.normal);
+      document.build(null, user.email, Role.normal);
       const newUser = await this.usersService.create(document);
       payload = { username: user.email, sub: newUser.id }
       console.log(`new user created on dynamodb -> ${newUser}`);

@@ -14,7 +14,7 @@ const createFunction = async (expressInstance): Promise<void> => {
     origin: '*',
     methods: "GET,PATCH,POST,DELETE",
     credentials: true,
-    allowedHeaders: "Authorization"
+    allowedHeaders: "Authorization, Origin, X-Requested-With, Content-Type, Accept"
   });
   const config = new DocumentBuilder()
     .setTitle("NutriFast API")

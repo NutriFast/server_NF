@@ -11,10 +11,6 @@ import { Roles } from "src/api/infrastructure/constants/roles";
 import { IsRole } from "src/api/infrastructure/decorators/isRole.decorators";
 
 export class CreateUserDTO {
-  @ApiProperty({ example: "Gabriel Lima" })
-  @IsNotEmpty()
-  @IsString()
-  name: string;
 
   @ApiProperty({ example: "email@email.com" })
   @IsNotEmpty()
