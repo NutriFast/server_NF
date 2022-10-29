@@ -9,14 +9,7 @@ export class SchedulesService {
   constructor(private repository: ScheduleRepository) {}
   async createClientSchedule(clientId: string, dto: CreateScheduleDTO) {
     const document = new ScheduleDocument();
-    document.build(
-      null,
-      clientId,
-      dto.timeInHours,
-      dto.activityId,
-      dto.activityDate,
-      new Date()
-    );
+    document.build(null, clientId, new Date());
     return this.repository.create(document);
   }
   async getByClientId(clientId: string) {
@@ -27,14 +20,7 @@ export class SchedulesService {
   }
   public async update(dto: UpdateScheduleDTO, id) {
     const document = new ScheduleDocument();
-    document.build(
-      id,
-      dto.clientId,
-      dto.timeInHours,
-      dto.activityId,
-      dto.activityDate,
-      new Date()
-    );
+    document.build(id, dto.clientId, new Date());
     let result;
     try {
       result = await this.repository.update(document);

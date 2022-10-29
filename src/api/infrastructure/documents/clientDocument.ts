@@ -20,24 +20,38 @@ export class ClientDocument extends BaseDocument implements Client {
     },
   })
   id: string;
-
-  @attribute()
-  userId: string;
-
   @attribute()
   name: string;
-
   @attribute()
   birthDate: Date;
-
+  @attribute()
+  weight: number;
+  @attribute()
+  hight: number;
+  @attribute()
+  phone: string;
+  @attribute()
+  userId: string;
   @attribute()
   gender: string;
 
-  public build(id, userId, name, birthDate, gender): void {
+  public build(
+    id: string,
+    name: string,
+    birthDate: Date,
+    weight: number,
+    hight: number,
+    phone: string,
+    userId: string,
+    gender: string
+  ): void {
     this.id = id;
-    this.userId = userId;
     this.name = name;
     this.birthDate = birthDate;
+    this.weight = weight;
+    this.hight = hight;
+    this.phone = phone;
+    this.userId = userId;
     this.gender = gender;
   }
 }

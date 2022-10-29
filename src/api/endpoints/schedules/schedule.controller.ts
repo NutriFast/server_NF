@@ -59,14 +59,7 @@ export class SchedulesController {
     @Param("clientId") clientId: string
   ) {
     this.logger.log(`GET -> /schedules/${clientId}/info`);
-    const result = await this.service.getByClientId(clientId);
-    let sumExerciseTime = 0;
-    result.forEach((activityDone) => {
-      sumExerciseTime = sumExerciseTime + activityDone.timeInHours;
-    });
-    return {
-      sumExerciseTime: sumExerciseTime,
-    };
+    return 0;
   }
   @ApiHeader({ name: "Authorization", required: true })
   @ApiOperation({

@@ -11,10 +11,11 @@ const createFunction = async (expressInstance): Promise<void> => {
     new ExpressAdapter(expressInstance)
   );
   app.enableCors({
-    origin: '*',
+    origin: "*",
     methods: "GET,PATCH,POST,DELETE",
     credentials: true,
-    allowedHeaders: "Authorization, Origin, X-Requested-With, Content-Type, Accept"
+    allowedHeaders:
+      "Authorization, Origin, X-Requested-With, Content-Type, Accept",
   });
   const config = new DocumentBuilder()
     .setTitle("NutriFast API")

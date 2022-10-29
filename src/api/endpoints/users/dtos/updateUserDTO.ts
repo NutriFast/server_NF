@@ -9,7 +9,6 @@ import {
   Length,
   Validate,
 } from "class-validator";
-import { Roles } from "src/api/infrastructure/constants/roles";
 import { IsRole } from "src/api/infrastructure/decorators/isRole.decorators";
 
 export class UpdateUserDTO {
@@ -38,5 +37,5 @@ export class UpdateUserDTO {
   @ApiProperty({ example: "Normal" })
   @Validate(IsRole)
   @IsNotEmpty()
-  role: Roles;
+  role: string;
 }

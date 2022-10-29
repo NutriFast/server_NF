@@ -15,7 +15,16 @@ export class ClientsService {
   public async create(dto: CreateClientDTO, userId: string) {
     const document = new ClientDocument();
 
-    document.build(null, userId, dto.name, dto.birthDate, dto.gender);
+    document.build(
+      null,
+      dto.name,
+      dto.birthDate,
+      dto.weight,
+      dto.height,
+      dto.phone,
+      dto.userId,
+      dto.gender
+    );
     return this.repository.create(document);
   }
 
@@ -35,7 +44,16 @@ export class ClientsService {
 
   public async update(dto: UpdateClientDTO) {
     const document = new ClientDocument();
-    document.build(dto.id, dto.name, dto.userId, dto.birthDate, dto.gender);
+    document.build(
+      null,
+      dto.name,
+      dto.birthDate,
+      dto.weight,
+      dto.height,
+      dto.phone,
+      dto.userId,
+      dto.gender
+    );
     let result;
     try {
       result = await this.repository.update(document);
