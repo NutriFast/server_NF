@@ -53,8 +53,7 @@ export class ClientsController {
   @Post()
   async create(@Req() req, @Body() dto: CreateClientDTO) {
     this.logger.log("POST -> /clients");
-    const result = this.service.create(dto, req.user.userId);
-    return result;
+    return this.service.create(dto, req.user.userId);
   }
 
   @ApiHeader({ name: "Authorization", required: true })
