@@ -5,7 +5,6 @@ import { jwtConstants } from "src/api/infrastructure/constants/jwtSecret";
 import { DynamoDBAdapter } from "src/api/infrastructure/providers/dynamoDB/dynamoDbAdapter";
 import { GoogleStrategy } from "src/api/infrastructure/providers/passport/google.stategy";
 import { JwtStrategy } from "src/api/infrastructure/providers/passport/jwt.auth";
-import { LocalStrategy } from "src/api/infrastructure/providers/passport/local.auth";
 import { UsersModule } from "../users/users.module";
 import { AuthController } from "./auth.controller";
 import { AuthService } from "./auth.service";
@@ -23,10 +22,9 @@ import { GoogleAuthenticationService } from "./googleAuthentication.service";
   providers: [
     DynamoDBAdapter,
     AuthService,
-    LocalStrategy,
     JwtStrategy,
     GoogleStrategy,
-    GoogleAuthenticationService
+    GoogleAuthenticationService,
   ],
   controllers: [AuthController],
   exports: [AuthService],

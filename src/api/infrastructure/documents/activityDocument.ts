@@ -23,8 +23,13 @@ export class ActivityDocument extends BaseDocument implements Activities {
 
   @attribute()
   name: string;
-  public build(id, name): void {
+
+  @attribute()
+  value: number;
+
+  public build(id: string, name: string, value: number): void {
     this.id = id;
     this.name = name;
+    this.value = value;
   }
 }

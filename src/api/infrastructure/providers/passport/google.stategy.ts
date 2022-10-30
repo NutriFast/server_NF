@@ -10,9 +10,18 @@ config();
 export class GoogleStrategy extends PassportStrategy(Strategy, "google") {
   constructor() {
     super({
-      clientID: process.env.ENVIRONMENT == 'DEV' ? process.env.GOOGLE_AUTH_ID_DEV : process.env.GOOGLE_AUTH_ID_PROD,
-      clientSecret: process.env.ENVIRONMENT == 'DEV' ? process.env.GOOGLE_AUTH_SECRET_DEV : process.env.GOOGLE_AUTH_SECRET_PROD,
-      callbackURL: process.env.ENVIRONMENT == 'DEV' ? process.env.GOOGLE_AUTH_REDIRECT_DEV : process.env.GOOGLE_AUTH_REDIRECT_PROD,
+      clientID:
+        process.env.ENVIRONMENT == "DEV"
+          ? process.env.GOOGLE_AUTH_ID_DEV
+          : process.env.GOOGLE_AUTH_ID_PROD,
+      clientSecret:
+        process.env.ENVIRONMENT == "DEV"
+          ? process.env.GOOGLE_AUTH_SECRET_DEV
+          : process.env.GOOGLE_AUTH_SECRET_PROD,
+      callbackURL:
+        process.env.ENVIRONMENT == "DEV"
+          ? process.env.GOOGLE_AUTH_REDIRECT_DEV
+          : process.env.GOOGLE_AUTH_REDIRECT_PROD,
       scope: ["email", "profile"],
     });
   }

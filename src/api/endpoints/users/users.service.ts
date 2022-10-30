@@ -1,4 +1,5 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
+import { Role, Roles } from "src/api/infrastructure/constants/roles";
 import { UserDocument } from "src/api/infrastructure/documents/userDocument";
 import { ClientRepository } from "src/api/infrastructure/repositories/clientRepository";
 import { UserRepository } from "src/api/infrastructure/repositories/userRepository";
@@ -14,7 +15,7 @@ export class UsersService {
   public async create(dto: CreateUserDTO) {
     const document = new UserDocument();
 
-    document.build(null, dto.email, dto.role);
+    document.build(null, dto.name, dto.email, Role.normal);
     return this.repository.create(document);
   }
   public async list() {
@@ -31,7 +32,7 @@ export class UsersService {
   }
   public async update(dto: UpdateUserDTO) {
     const document = new UserDocument();
-    document.build(dto.id, dto.email, dto.role);
+    document.build(dto.id, dto.name, dto.email, dto.role);
     let result;
     try {
       result = await this.repository.update(document);
