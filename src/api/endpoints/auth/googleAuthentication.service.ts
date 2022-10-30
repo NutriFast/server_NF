@@ -1,6 +1,4 @@
-import { Injectable, UnauthorizedException } from "@nestjs/common";
-import { UsersService } from "../users/users.service";
-import { ConfigService } from "@nestjs/config";
+import { Injectable } from "@nestjs/common";
 import { google, Auth } from "googleapis";
 
 @Injectable()

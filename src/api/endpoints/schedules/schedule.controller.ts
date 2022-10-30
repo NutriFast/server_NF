@@ -12,16 +12,14 @@ import {
 } from "@nestjs/common";
 import { ApiHeader, ApiOperation, ApiTags } from "@nestjs/swagger";
 import { JwtAuthGuard } from "src/api/infrastructure/guards/jwtAuth.guard";
-import { ClientsService } from "../clients/clients.service";
 import { CreateScheduleDTO } from "./dtos/createScheduleDTO";
 import { UpdateScheduleDTO } from "./dtos/updateScheduleDTO";
 import { SchedulesService } from "./schedule.service";
-@ApiTags("Schedule")
+@ApiTags("Schedules")
 @Controller()
 export class SchedulesController {
   constructor(
     private readonly service: SchedulesService,
-    private clientService: ClientsService
   ) {}
   private logger = new Logger(SchedulesController.name);
 
@@ -86,5 +84,18 @@ export class SchedulesController {
     this.logger.log(`PATCH -> /schedules/${id}`);
     const result = await this.service.update(dto, id);
     return result;
+  }
+
+  @ApiHeader({ name: "Authorization", required: true })
+  @ApiOperation({ description: "This endpoint get a Client Schedule time sum" })
+  @UseGuards(JwtAuthGuard)
+  @Get("/:scheduleId")
+  async getSchedule(
+    @Req() req,
+    @Param("scheduleId") scheduleId: string
+  ) {
+    this.logger.log(`GET -> /schedules/${scheduleId}`);
+    this.service.getActivitiesFromSchedule(scheduleId);
+    return 0;
   }
 }

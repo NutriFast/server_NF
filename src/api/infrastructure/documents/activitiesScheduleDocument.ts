@@ -38,6 +38,12 @@ export class ActivitiesScheduleDocument
 
   @attribute()
   name: string;
+
+  @attribute()
+  dailyBase: number;
+  
+  @attribute()
+  parcialTime: number
   public build(
     id: string,
     duration: number,

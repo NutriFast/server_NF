@@ -14,6 +14,11 @@ export class ScheduleRepository extends BaseRepository<ScheduleDocument> {
     );
   }
 
+  public async getById(id: string): Promise<ScheduleDocument> {
+    const document = new ScheduleDocument();
+    document.id = id;
+    return this.getDocument(document);
+  }
   public async create(
     document: ScheduleDocument,
     options?: any

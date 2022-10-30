@@ -1,6 +1,5 @@
 import { Injectable, Logger } from "@nestjs/common";
 import { UserRepository } from "src/api/infrastructure/repositories/userRepository";
-import * as bcrypt from "bcrypt";
 import { UserDocument } from "src/api/infrastructure/documents/userDocument";
 import { UsersService } from "../users/users.service";
 import { JwtService } from "@nestjs/jwt";

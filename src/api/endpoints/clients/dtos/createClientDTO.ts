@@ -32,12 +32,6 @@ export class CreateClientDTO {
   @Type(() => String)
   phone: string;
 
-  @ApiProperty({ example: "296fd9a1-dfc2-4a8d-be1a-316b653a8b3d" })
-  @IsString()
-  @IsNotEmpty()
-  @Type(() => String)
-  userId: string;
-
   @ApiProperty({ example: "Masculino" })
   @IsNotEmpty()
   @IsString()

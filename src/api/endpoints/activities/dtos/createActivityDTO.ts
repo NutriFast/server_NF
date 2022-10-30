@@ -5,7 +5,6 @@ import {
   IsNumber,
   IsPositive,
   IsString,
-  Min,
 } from "class-validator";
 
 export class CreateActivityDTO {

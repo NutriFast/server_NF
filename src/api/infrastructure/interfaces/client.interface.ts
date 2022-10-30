@@ -3,7 +3,7 @@ export interface Client {
   name: string;
   birthDate: Date;
   weight: number;
-  hight: number;
+  height: number;
   phone: string;
   userId: string;
   gender: string;

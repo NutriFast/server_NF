@@ -27,20 +27,25 @@ export class ClientDocument extends BaseDocument implements Client {
   @attribute()
   weight: number;
   @attribute()
-  hight: number;
+  height: number;
   @attribute()
   phone: string;
   @attribute()
   userId: string;
   @attribute()
   gender: string;
-
+  @attribute()
+  factorHarris: number;
+  @attribute()
+  factorFAO: number;
+  @attribute()
+  factorMifflin: number;
   public build(
     id: string,
     name: string,
     birthDate: Date,
     weight: number,
-    hight: number,
+    height: number,
     phone: string,
     userId: string,
     gender: string
@@ -49,7 +54,7 @@ export class ClientDocument extends BaseDocument implements Client {
     this.name = name;
     this.birthDate = birthDate;
     this.weight = weight;
-    this.hight = hight;
+    this.height = height;
     this.phone = phone;
     this.userId = userId;
     this.gender = gender;
