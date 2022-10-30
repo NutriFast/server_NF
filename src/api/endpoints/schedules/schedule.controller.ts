@@ -18,9 +18,7 @@ import { SchedulesService } from "./schedule.service";
 @ApiTags("Schedules")
 @Controller()
 export class SchedulesController {
-  constructor(
-    private readonly service: SchedulesService,
-  ) {}
+  constructor(private readonly service: SchedulesService) {}
   private logger = new Logger(SchedulesController.name);
 
   @ApiHeader({ name: "Authorization", required: true })
@@ -90,10 +88,7 @@ export class SchedulesController {
   @ApiOperation({ description: "This endpoint get a Client Schedule time sum" })
   @UseGuards(JwtAuthGuard)
   @Get("/:scheduleId")
-  async getSchedule(
-    @Req() req,
-    @Param("scheduleId") scheduleId: string
-  ) {
+  async getSchedule(@Req() req, @Param("scheduleId") scheduleId: string) {
     this.logger.log(`GET -> /schedules/${scheduleId}`);
     this.service.getActivitiesFromSchedule(scheduleId);
     return 0;

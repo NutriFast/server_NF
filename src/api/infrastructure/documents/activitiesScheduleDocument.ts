@@ -41,9 +41,9 @@ export class ActivitiesScheduleDocument
 
   @attribute()
   dailyBase: number;
-  
+
   @attribute()
-  parcialTime: number
+  parcialTime: number;
   public build(
     id: string,
     duration: number,

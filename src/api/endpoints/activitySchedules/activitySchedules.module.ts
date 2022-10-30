@@ -13,7 +13,7 @@ import { ActivitySchedulesService } from "./activitySchedules.service";
     DynamoDBAdapter,
     ScheduleRepository,
     ActivityRepository,
-    ClientRepository
+    ClientRepository,
   ],
   controllers: [ActivitySchedulesController],
 })

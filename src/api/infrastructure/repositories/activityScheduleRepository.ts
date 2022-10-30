@@ -23,16 +23,18 @@ export class ActivitySchedulesRepository extends BaseRepository<ActivitiesSchedu
     return document;
   }
 
-  public async getByScheduleId(scheduleId: string): Promise<ActivitiesScheduleDocument[]> {
+  public async getByScheduleId(
+    scheduleId: string
+  ): Promise<ActivitiesScheduleDocument[]> {
     let document: ActivitiesScheduleDocument[] = [];
 
     const iterator = await this.mapper.scan(ActivitiesScheduleDocument);
     for await (const record of iterator) document.push(record);
     if (document.length === 0) return null;
-    document = document.filter((item)=> {
+    document = document.filter((item) => {
       return item.scheduleId == scheduleId;
     });
-    return document
+    return document;
   }
 
   public async create(

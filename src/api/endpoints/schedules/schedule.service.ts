@@ -10,7 +10,7 @@ export class SchedulesService {
   constructor(
     private repository: ScheduleRepository,
     private activityRepository: ActivityRepository
-    ) {}
+  ) {}
   async createClientSchedule(clientId: string, dto: CreateScheduleDTO) {
     const document = new ScheduleDocument();
     document.build(null, clientId, new Date());
@@ -34,7 +34,6 @@ export class SchedulesService {
     return result;
   }
   public async getActivitiesFromSchedule(scheduleId: string) {
-    const activities = await this.activityRepository.findAll()
-    
+    const activities = await this.activityRepository.findAll();
   }
 }
