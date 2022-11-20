@@ -30,8 +30,10 @@ export class AuthService {
       const newUser = await this.usersService.create(document);
       payload = { username: user.email, sub: newUser.id };
       this.logger.log(`new user created on dynamodb -> ${newUser}`);
+    } else {
+      payload = { username: user.email, sub: userFound[0].id };
     }
-    payload = { username: user.email, sub: userFound[0].id };
+    
     const token = await this.jwtService.sign(payload).toString();
     return { accessToken: `Bearer ${token}` };
   }

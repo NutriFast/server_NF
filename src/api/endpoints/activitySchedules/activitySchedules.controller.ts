@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Logger,
   Param,
@@ -45,5 +46,17 @@ export class ActivitySchedulesController {
   ) {
     this.logger.log("POST -> /activities");
     return this.service.create(dto, clientId);
+  }
+
+  @ApiHeader({ name: "Authorization", required: true })
+  @ApiOperation({ description: "This endpoint will create a activity" })
+  @UseGuards(JwtAuthGuard)
+  @Delete("/:id")
+  async delete(
+    @Req() req,
+    @Param("id") id: string
+  ) {
+    this.logger.log(`DELETE -> /activities/${id}`);
+    return this.service.delete(id);
   }
 }

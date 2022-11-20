@@ -1,10 +1,7 @@
 import {
   Injectable,
-  InternalServerErrorException,
   NotFoundException,
 } from "@nestjs/common";
-import { rejects } from "assert";
-import { resolve } from "path";
 import { ActivitiesScheduleDocument } from "src/api/infrastructure/documents/activitiesScheduleDocument";
 import { ScheduleDocument } from "src/api/infrastructure/documents/scheduleDocument";
 import { ActivityRepository } from "src/api/infrastructure/repositories/activityRepository";
@@ -127,5 +124,9 @@ export class ActivitySchedulesService {
     const activity = await this.activityRepository.getById(item.activityId);
     item.parcialTime = activity.value * item.dailyBase;
     return item;
+  }
+
+  public async delete(id:string) {
+    return this.repository.deleteById(id);
   }
 }
