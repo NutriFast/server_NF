@@ -63,7 +63,7 @@ export class ClientsController {
   async update(@Body() dto: UpdateClientDTO) {
     this.logger.log("PATCH -> /clients");
     const client = await this.service.get(dto.id);
-    if (client) return this.service.update(dto);
+    if (client) return this.service.update(dto, client);
     throw new NotFoundException("Client not found");
   }
 

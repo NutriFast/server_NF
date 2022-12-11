@@ -44,17 +44,17 @@ export class ClientsService {
     return result;
   }
 
-  public async update(dto: UpdateClientDTO) {
+  public async update(dto: UpdateClientDTO, client) {
     const document = new ClientDocument();
     document.build(
-      null,
-      dto.name,
-      dto.birthDate,
-      dto.weight,
-      dto.height,
-      dto.phone,
-      dto.userId,
-      dto.gender
+      dto.id,
+      dto.name ? dto.name : client.name,
+      dto.birthDate ? dto.birthDate : client.birthDate,
+      dto.weight ? dto.weight : client.weight,
+      dto.height ? dto.height : client.height,
+      dto.phone ? dto.phone : client.phone,
+      dto.userId ? dto.userId : client.userId,
+      dto.gender ? dto.gender : client.gender
     );
     let result;
     try {
@@ -85,7 +85,6 @@ export class ClientsService {
 
   public getFactorsFromClient(client: ClientDocument) {
     const age = this.getAgeFromBirthDate(client.birthDate);
-    console.log(age);
     if (client.gender == "Masculino") {
       client.factorHarris =
         66 + 13.8 * client.weight + 5 * client.height - 6.8 * age;
@@ -97,7 +96,6 @@ export class ClientsService {
         client.factorFAO = 11.472 * client.weight + 873.1;
       if (60 <= age) client.factorFAO = 11.711 * client.weight + 587.7;
       client.factorMifflin = 10 * client.weight + 6.25 * client.height;
-      console.log(client.factorMifflin);
       return client;
     }
     return client;
