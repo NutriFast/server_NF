@@ -14,10 +14,12 @@
   "hosting": {
     "appAssociation": "AUTO",
     "public": "public",
-    "rewrites": [{
-      "source": "/**",
-      "function": "api",
-      "dynamicLinks": true
-    }]
+    "rewrites": [
+      {
+        "source": "/**",
+        "function": "api",
+        "dynamicLinks": true
+      }
+    ]
   }
 }

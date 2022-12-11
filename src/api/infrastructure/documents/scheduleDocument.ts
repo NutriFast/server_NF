@@ -27,30 +27,11 @@ export class ScheduleDocument extends BaseDocument implements Schedule {
   clientId: string;
 
   @attribute()
-  activityId;
-
-  @attribute()
-  timeInHours: number;
-
-  @attribute()
-  activityDate: Date;
-
-  @attribute()
   createdAt: Date;
 
-  public build(
-    id,
-    clientId,
-    timeInHours,
-    activityId,
-    activityDate,
-    createdAt
-  ): void {
+  public build(id: string, clientId: string, createdAt: Date): void {
     this.id = id;
     this.clientId = clientId;
-    this.timeInHours = timeInHours;
-    this.activityId = activityId;
-    this.activityDate = activityDate;
     this.createdAt = createdAt;
   }
 }

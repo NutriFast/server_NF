@@ -21,20 +21,15 @@ export class UserDocument extends BaseDocument implements User {
     },
   })
   id: string;
-
   @attribute()
   name: string;
-
   @attribute()
   email: string;
 
   @attribute()
-  password: string;
+  role: string;
 
-  @attribute()
-  role: Roles;
-
-  public build(id, name, email, role): void {
+  public build(id: string, name: string, email: string, role: string): void {
     this.id = id;
     this.name = name;
     this.email = email;

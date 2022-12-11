@@ -1,7 +1,10 @@
 export interface Client {
   id: string;
-  userId: string;
   name: string;
   birthDate: Date;
+  weight: number;
+  height: number;
+  phone: string;
+  userId: string;
   gender: string;
 }

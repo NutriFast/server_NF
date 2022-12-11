@@ -11,7 +11,7 @@ export class ActivitiesService {
   public async create(dto: CreateActivityDTO) {
     const document = new ActivityDocument();
 
-    document.build(null, dto.name);
+    document.build(null, dto.name, dto.value);
     return this.repository.create(document);
   }
 
@@ -31,7 +31,7 @@ export class ActivitiesService {
 
   public async update(dto: UpdateActivityDTO) {
     const document = new ActivityDocument();
-    document.build(dto.id, dto.name);
+    document.build(dto.id, dto.name, dto.value);
     let result;
     try {
       result = await this.repository.update(document);

@@ -19,6 +19,10 @@ async function bootstrap() {
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup("api", app, document);
-  await app.listen(process.env.ENVIRONMENT == 'DEV' ? process.env.PORT_DEV : process.env.PORT_PROD);
+  await app.listen(
+    process.env.ENVIRONMENT == "DEV"
+      ? process.env.PORT_DEV
+      : process.env.PORT_PROD
+  );
 }
 bootstrap();

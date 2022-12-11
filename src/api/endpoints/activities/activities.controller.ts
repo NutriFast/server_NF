@@ -34,9 +34,9 @@ export class ActivitiesController {
   @Get("/:id")
   async get(@Req() req, @Param("id") id: string) {
     this.logger.log(`GET -> /activities/${id}`);
-    await this.rolesMiddleware.isMaster(
-      await this.userService.get(req.user.userId)
-    );
+    // await this.rolesMiddleware.isMaster(
+    //   await this.userService.get(req.user.userId)
+    // );
     const result = this.service.get(id);
     return result;
   }
@@ -46,9 +46,9 @@ export class ActivitiesController {
   @Get()
   async list(@Req() req, @Query("name") name?: string) {
     this.logger.log("GET -> /activities");
-    await this.rolesMiddleware.isMaster(
-      await this.userService.get(req.user.userId)
-    );
+    // await this.rolesMiddleware.isMaster(
+    //   await this.userService.get(req.user.userId)
+    // );
     if (name) return this.service.getByName(name);
     const result = this.service.list();
     return result;
@@ -59,9 +59,9 @@ export class ActivitiesController {
   @Post()
   async create(@Req() req, @Body() dto: CreateActivityDTO) {
     this.logger.log("POST -> /activities");
-    await this.rolesMiddleware.isMaster(
-      await this.userService.get(req.user.userId)
-    );
+    // await this.rolesMiddleware.isMaster(
+    //   await this.userService.get(req.user.userId)
+    // );
     const result = this.service.create(dto);
     return result;
   }
@@ -83,9 +83,9 @@ export class ActivitiesController {
   @Delete()
   async delete(@Req() req, @Body("id") id: string) {
     this.logger.log("DELETE -> /activities");
-    await this.rolesMiddleware.isMaster(
-      await this.userService.get(req.user.userId)
-    );
+    // await this.rolesMiddleware.isMaster(
+    //   await this.userService.get(req.user.userId)
+    // );
     const result = this.service.delete(id);
     return result;
   }

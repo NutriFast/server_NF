@@ -1,4 +1,5 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
+import { Role, Roles } from "src/api/infrastructure/constants/roles";
 import { UserDocument } from "src/api/infrastructure/documents/userDocument";
 import { ClientRepository } from "src/api/infrastructure/repositories/clientRepository";
 import { UserRepository } from "src/api/infrastructure/repositories/userRepository";
@@ -14,7 +15,7 @@ export class UsersService {
   public async create(dto: CreateUserDTO) {
     const document = new UserDocument();
 
-    document.build(null, dto.name, dto.email, dto.role);
+    document.build(null, dto.name, dto.email, Role.normal);
     return this.repository.create(document);
   }
   public async list() {
@@ -39,9 +40,6 @@ export class UsersService {
       throw new NotFoundException(err);
     }
     return result;
-  }
-  public async getByName(name: string) {
-    return this.repository.getByName(name);
   }
   public async getClients(id: string) {
     return this.clientRepository.getClientByUserId(id);

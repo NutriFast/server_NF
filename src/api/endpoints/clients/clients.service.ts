@@ -9,13 +9,24 @@ export class ClientsService {
   constructor(private repository: ClientRepository) {}
 
   public async getClientByUserId(userId: string) {
-    return this.repository.getClientByUserId(userId);
+    const clients = await this.repository.getClientByUserId(userId);
+    clients.map(async (client) => await this.getFactorsFromClient(client));
+    return clients;
   }
 
   public async create(dto: CreateClientDTO, userId: string) {
     const document = new ClientDocument();
 
-    document.build(null, userId, dto.name, dto.birthDate, dto.gender);
+    document.build(
+      null,
+      dto.name,
+      dto.birthDate,
+      dto.weight,
+      dto.height,
+      dto.phone,
+      userId,
+      dto.gender
+    );
     return this.repository.create(document);
   }
 
@@ -33,9 +44,18 @@ export class ClientsService {
     return result;
   }
 
-  public async update(dto: UpdateClientDTO) {
+  public async update(dto: UpdateClientDTO, client) {
     const document = new ClientDocument();
-    document.build(dto.id, dto.name, dto.userId, dto.birthDate, dto.gender);
+    document.build(
+      dto.id,
+      dto.name ? dto.name : client.name,
+      dto.birthDate ? dto.birthDate : client.birthDate,
+      dto.weight ? dto.weight : client.weight,
+      dto.height ? dto.height : client.height,
+      dto.phone ? dto.phone : client.phone,
+      dto.userId ? dto.userId : client.userId,
+      dto.gender ? dto.gender : client.gender
+    );
     let result;
     try {
       result = await this.repository.update(document);
@@ -51,5 +71,33 @@ export class ClientsService {
 
   public async getByName(name: string) {
     return this.repository.getByName(name);
+  }
+
+  public getAgeFromBirthDate(stringDate: Date) {
+    const today = new Date();
+    const birthDate = new Date(stringDate);
+    let years = today.getFullYear() - birthDate.getFullYear();
+    const months = today.getMonth() - birthDate.getMonth();
+    if (months < 0 || (months === 0 && today.getDate() < birthDate.getDate()))
+      years--;
+    return years;
+  }
+
+  public getFactorsFromClient(client: ClientDocument) {
+    const age = this.getAgeFromBirthDate(client.birthDate);
+    if (client.gender == "Masculino") {
+      client.factorHarris =
+        66 + 13.8 * client.weight + 5 * client.height - 6.8 * age;
+      if (10 <= age && age << 18)
+        client.factorFAO = 17.686 * client.weight + 658.2;
+      if (18 <= age && age << 30)
+        client.factorFAO = 15.057 * client.weight + 692.6;
+      if (30 <= age && age << 60)
+        client.factorFAO = 11.472 * client.weight + 873.1;
+      if (60 <= age) client.factorFAO = 11.711 * client.weight + 587.7;
+      client.factorMifflin = 10 * client.weight + 6.25 * client.height;
+      return client;
+    }
+    return client;
   }
 }

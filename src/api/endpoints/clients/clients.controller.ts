@@ -53,8 +53,7 @@ export class ClientsController {
   @Post()
   async create(@Req() req, @Body() dto: CreateClientDTO) {
     this.logger.log("POST -> /clients");
-    const result = this.service.create(dto, req.user.userId);
-    return result;
+    return this.service.create(dto, req.user.userId);
   }
 
   @ApiHeader({ name: "Authorization", required: true })
@@ -64,7 +63,7 @@ export class ClientsController {
   async update(@Body() dto: UpdateClientDTO) {
     this.logger.log("PATCH -> /clients");
     const client = await this.service.get(dto.id);
-    if (client) return this.service.update(dto);
+    if (client) return this.service.update(dto, client);
     throw new NotFoundException("Client not found");
   }
 
